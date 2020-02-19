@@ -51,14 +51,18 @@ export default class RyanPTable extends React.Component<
   checkLicenseActive = () => {
     const tenantUrl = this.props.siteCollectionUrl.split("/")[2];
     axios
-      .get(`/tenants.json`)
+      .get("/tenants")
       .then(res => {
-        Object.keys(res.data).map(k => {
+        Object.keys(res.data.documents).map(k => {
           //? Object.keys returns an array of object keys
-          let obj = res.data[k];
-          if (obj.tenant === tenantUrl) {
+          let obj = res.data.documents[k];
+          if (obj.fields.tenant.stringValue === tenantUrl) {
+            console.log(
+              "isLicenseActive",
+              obj.fields.isLicenseActive.stringValue
+            );
             this.setState({
-              isLicenseActive: obj.isLicenseActive
+              isLicenseActive: obj.fields.isLicenseActive.stringValue //? This is pretty pointless. It's more prepare for the future if using seperate database for key auth.
             });
           }
         }); //? Extract object to put in array of object
@@ -81,6 +85,7 @@ export default class RyanPTable extends React.Component<
     this.getDataFromSPListDb().then(listFromSPDb => {
       this.setState({ spListData: listFromSPDb });
     });
+
     setInterval(() => this.checkLicenseActive(), 7000);
     setInterval(
       () =>
@@ -98,9 +103,10 @@ export default class RyanPTable extends React.Component<
         {this.state.isLicenseActive === "true" ? (
           <React.Fragment>
             <Header size="huge">
-              {this.state.spListData[0]
+              {/* {this.state.spListData[0]
                 ? this.state.spListData[0].title
-                : "No Title"}
+                : "No Title"} */}
+              TEST WITH FIRESTORE
             </Header>
             <Divider />
             <Message color="teal">
@@ -115,7 +121,8 @@ export default class RyanPTable extends React.Component<
         ) : (
           <Message negative>
             <Message.Header>
-              We're sorry your SRKK tenant account has been deactivated.
+              We're sorry your SRKK tenant account has been deactivated. Test
+              with FIRESTORE.
             </Message.Header>
             <p>
               Your license has expired. Please contact us for more information.
