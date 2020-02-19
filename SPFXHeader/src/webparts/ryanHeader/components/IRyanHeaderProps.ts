@@ -1,6 +1,6 @@
 import { SPHttpClient } from "@microsoft/sp-http";
 
-export interface IRyanHeaderProps {
+export default interface IRyanHeaderProps {
   description: string;
   spHttpClient: SPHttpClient;
   currentSiteUrl: string;

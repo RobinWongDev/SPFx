@@ -1,9 +1,9 @@
 import * as React from "react";
-import { IRyanHeaderProps } from "./IRyanHeaderProps";
+import  IRyanHeaderProps from "./IRyanHeaderProps";
 import { IRyanHeaderState } from "./IRyanHeaderState";
 import { SPHttpClient, SPHttpClientResponse } from "@microsoft/sp-http";
 import { ISchema } from "../ISchema";
-import HeaderList from "./HeaderList";
+import HeaderR from "./HeaderList";
 import axios from "../axios-license";
 import { Message, Header, Divider, Button, Icon } from "semantic-ui-react";
 
@@ -109,7 +109,7 @@ export default class RyanPTable extends React.Component<
                   ? this.state.spListData[0].desc
                   : "No Description"}
               </Message.Header>
-              <HeaderList data={this.state.spListData} />
+              <HeaderR data={this.state.spListData} />
             </Message>
           </React.Fragment>
         ) : (
